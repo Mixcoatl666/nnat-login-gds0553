@@ -1,7 +1,7 @@
 # Login con Angular
-*Autor: Noah Noel Arredondo Torres*
-*Grupo: GDS0553*
-*Profesor: Gabriel Barron Rodriguez*
+- *Autor: Noah Noel Arredondo Torres*
+- *Grupo: GDS0553*
+- *Profesor: Gabriel Barron Rodriguez*
 
 # Instalación
 - Clonar el repositorio
