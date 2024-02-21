@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/user';
 import { MessageService } from 'primeng/api';
@@ -11,19 +11,19 @@ import { Router } from '@angular/router';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+  
   registerForm = this.fb.group({
-    fullname:['', [Validators.required]],
+    fullname: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
-    confirmPassword: ['', [Validators.required]]
-  },
-  )
+    confirmPassword: ['', [Validators.required, this.passwordMatchValidator()]]
+  });
 
   constructor(
     private fb:FormBuilder, 
     private authService: AuthService, 
     private messageService: MessageService, 
-    private router: Router){}
+    private router: Router){ }
 
   get email(){
     return this.registerForm.controls['email']
@@ -55,5 +55,18 @@ export class RegisterComponent {
         this.messageService.add({ severity: 'warn', summary: 'No se Registro', detail: 'Ta Mal D:' });
       }
     )
+  }
+
+  passwordMatchValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const password = control.parent?.get('password');
+      const confirmPassword = control.parent?.get('confirmPassword');
+
+      if (password && confirmPassword && password.value !== confirmPassword.value) {
+        return { 'passwordMismatch': true };
+      }
+
+      return null;
+    };
   }
 }

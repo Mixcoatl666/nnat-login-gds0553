@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { authGuard } from '../../guards/auth.guard';
 
 @Component({
   selector: 'app-home',
